@@ -27,8 +27,9 @@ class Sphere:
             
 
 
-def raytrace(v):
-    distance = ball.intersect(v)
-    if distance < 0:
-        return [0,0,0]
-    return ball.colour
+def raytrace(v, shapes):
+    distlist = [(x.intersect(v), x) for x in shapes]
+    distlist = [(d, x) for d, x in distlist if d > 0]
+    distlist.sort(key = lambda el: el[0])
+    colour = distlist[0][1].colour if distlist else [0,0,0]
+    return colour
